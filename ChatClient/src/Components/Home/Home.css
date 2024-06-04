@@ -1,0 +1,195 @@
+﻿/* Контейнер для страницы Home */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+.home-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background-color: #f0f0f0;
+}
+
+/* Стили для боковой панели */
+.sidebar {
+    flex: 2;
+    background-color: #2c3e50;
+    display: flex;
+    
+    flex-direction: column;
+    color: white;
+}
+
+/* Заголовок в боковой панели */
+.header {
+    padding: 20px;
+    background-color: #34495e;
+    text-align: center;
+}
+
+/* Список чатов */
+.chats-list {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Элемент чата */
+.chat-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #3e4e59;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-item.active, .chat-item:hover {
+    background-color: #00bcd4;
+}
+
+/* Окно чата */
+.chat-window {
+    flex: 8;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+/* Заголовок чата */
+.chat-header {
+    padding: 20px;
+    background-color: #ecf0f1;
+    border-bottom: 1px solid #ccc;
+    color: black;
+}
+
+/* Сообщения чата */
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Ввод сообщения */
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #ecf0f1;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0097a7;
+}
+
+/* Сообщение при отсутствии выбранного чата */
+.no-chat-selected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #999;
+}
+.chat-messages {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Стили для сообщений пользователя */
+.me {
+    align-self: flex-end;
+    color: #ffffff;
+    background-color: #6652ea; /* Светло-зеленый цвет */
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    max-width: 60%;
+}
+
+/* Стили для сообщений друга */
+.friend {
+    align-self: flex-start;
+    color: #ffffff;
+    background-color: #6652ea; /* Светло-красный цвет */
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    max-width: 60%;
+}
+
+/* Стили для имени пользователя */
+.me > div:first-child,
+.friend > div:first-child {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Стили для текста сообщения */
+.me > div:last-child,
+.friend > div:last-child {
+    word-wrap: break-word;
+}
+
+/* Стили для input и кнопки отправки сообщения */
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.chat-input button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+

@@ -1,0 +1,76 @@
+﻿/* Стили для контейнера формы */
+.signin-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Стили для заголовка формы */
+.signin-header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    margin: -20px -20px 20px -20px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-weight: bold;
+}
+
+/* Стили для групп полей формы */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Стили для полей ввода */
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    color: black;
+}
+
+/* Стили для нижнего блока формы */
+.signin-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Стили для ссылки "Забыли пароль?" */
+.forgot-password {
+    font-size: 12px;
+    color: #666;
+    text-decoration: none;
+}
+
+/* Стили для кнопки */
+.signin-button {
+    padding: 10px 20px;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Стили для кнопки при наведении */
+.signin-button:hover {
+    background-color: #0097a7;
+}
+
+/* Стили для сообщений об ошибках */
+.error {
+    color: red;
+    margin-bottom: 15px;
+}
