@@ -11,4 +11,6 @@ public class Message
     public long OwnerId { get; set; }
     public string Text { get; set; }
     public DateTime CreateAt { get; set; }
+
+    public bool isReaded { get; set; }
 }

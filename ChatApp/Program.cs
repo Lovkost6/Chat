@@ -26,8 +26,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromHours(20);
         options.SlidingExpiration = true;
         options.Cookie.SameSite = SameSiteMode.None;
-        options.LoginPath = "/";
-        options.AccessDeniedPath = "/v1/auth/Forbidden";
+        options.LoginPath = "/Notauthorize";
+        options.AccessDeniedPath = "/Forbidden";
         options.Cookie.Name = "userdata";
     });
 

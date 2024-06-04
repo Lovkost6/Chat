@@ -22,12 +22,14 @@ public class ChatController : ControllerBase
         var currentUserId = Convert.ToInt64(User.Claims.ToList()[0].Value);
         var chatsFirst = await _context.Chats.Where(x => x.FirstUserId == currentUserId)
             .Include(x=> x.SecondUser)
-            .Select(x=> new {x.Id, UserId = x.SecondUserId ,UserName = x.SecondUser.Name})
+            .Include(x => x.Messages)
+            .Select(x=> new {x.Id, UserId = x.SecondUserId ,UserName = x.SecondUser.Name,NotReadCount = x.Messages.Count(x => x.isReaded == false && x.OwnerId != currentUserId)})
             .ToListAsync();
         
         var chatsSecond = await _context.Chats.Where(x => x.SecondUserId == currentUserId)
             .Include(x=> x.FirstUser)
-            .Select(x=> new {x.Id, UserId = x.FirstUserId ,UserName = x.FirstUser.Name})
+            .Include(x => x.Messages)
+            .Select(x=> new {x.Id, UserId = x.FirstUserId ,UserName = x.FirstUser.Name, NotReadCount = x.Messages.Count(x => x.isReaded == false && x.OwnerId != currentUserId)})
             .ToListAsync();
         
         chatsFirst.AddRange(chatsSecond);

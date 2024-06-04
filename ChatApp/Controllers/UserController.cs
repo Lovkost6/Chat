@@ -19,8 +19,8 @@ public class UserController:ControllerBase
     [HttpGet("/users")]
     public async Task<ActionResult> GetUsers()
     {
-        var currentUserId = User.Claims.ToList()[0];
-        var users = await _context.Users.Where(user => user.Id != Convert.ToInt64(currentUserId.Value))
+        var currentUserId =  Convert.ToInt64(User.Claims.ToList()[0].Value);
+        var users = await _context.Users.Where(user => user.Id != currentUserId)
             .Select(x =>
             new {
                  x.Id,

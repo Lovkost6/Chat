@@ -18,8 +18,8 @@ export const Home = () => {
     const messagesEndRef = useRef(null);
 
     useEffect(() => {
-        GetChats()
         GetConnection()
+        GetChats()
     }, []);
 
     useEffect(() => {
@@ -27,11 +27,11 @@ export const Home = () => {
     }, [selectedChat]);
 
     useEffect(() => {
-        scrollToBottom(); 
+        scrollToBottom();
     }, [messages]);
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        messagesEndRef.current?.scrollIntoView({behavior: "instant"});
     };
     const SignOut = () => {
         fetch('https://localhost:7275/sign-out', {
@@ -60,15 +60,16 @@ export const Home = () => {
         const newConnection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:7275/chatHub")
             .build();
-        newConnection.on("RecieveMessage", function ( message) {
-            setMessages(prev => {
-                console.log([...prev, message])
-                return [...prev, message]
-            });
-            console.log(message)
+        console.log(newConnection.state)
+        newConnection.on("RecieveMessage", function (message) {
+            console.log("hello")
+            console.log(message.chatId)
+            setMessages(prev => [...prev, message]);
+                
         });
         try {
             await newConnection.start();
+            console.log(newConnection.state)
             setConnection(newConnection);
         } catch (error) {
             console.error('Ошибка при установлении соединения с SignalR:', error);
@@ -76,7 +77,7 @@ export const Home = () => {
     }
 
     const GetMessages = () => {
-        if (selectedChat == null){
+        if (selectedChat == null) {
             return
         }
         fetch(`https://localhost:7275/messages/${selectedChat.id}`, {
@@ -87,9 +88,14 @@ export const Home = () => {
             withCredentials: true,
             credentials: 'include',
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 401) {
+                    resetCurrentUser()
+                    return
+                }
+                return response.json()
+            })
             .then(data => {
-                console.log(data)
                 setMessages(data)
             })
             .catch(error => {
@@ -106,9 +112,14 @@ export const Home = () => {
             withCredentials: true,
             credentials: 'include',
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 401) {
+                    resetCurrentUser()
+                    return
+                }
+                return response.json()
+            })
             .then(data => {
-                console.log(data)
                 setChats(data)
             })
             .catch(error => {
@@ -128,9 +139,13 @@ export const Home = () => {
                         <div
                             key={chat.id}
                             className={`chat-item ${selectedChat?.id === chat.id ? 'active' : ''}`}
-                            onClick={() => setSelectedChat(chat)}
+                            onClick={() => {
+                                setSelectedChat(chat)
+                                GetConnection()
+                            }}
                         >
-                            {chat.userName}
+                            {chat.userName}&nbsp;
+                            <span className="notification">&nbsp;{chat.notReadCount}&nbsp;</span>
                         </div>
                     ))}
                 </div>
@@ -144,8 +159,6 @@ export const Home = () => {
                         </div>
                         <div className="chat-messages">
                             {messages?.map(mes => {
-                                console.log(user.id, mes.ownerId)
-
                                 const isOwnMessage = user.id === mes.ownerId;
                                 return (
                                     <div key={mes.id} className={isOwnMessage ? "me" : "friend"}>

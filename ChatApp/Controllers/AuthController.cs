@@ -81,4 +81,15 @@ public class AuthController:ControllerBase
         return Ok();
     }
     
+    [HttpGet("/Notauthorize")]
+    public async Task<ActionResult> ErrorNotAuth()
+    {
+        return Unauthorized();
+    }
+    
+    [HttpGet("/Forbidden")]
+    public async Task<ActionResult> ErrorForbidden ()
+    {
+        return StatusCode(403);
+    }
 }
