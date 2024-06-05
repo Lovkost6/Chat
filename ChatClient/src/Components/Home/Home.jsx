@@ -23,7 +23,52 @@ export const Home = () => {
     }, []);
 
     useEffect(() => {
+        ConnectionOn()
+    }, [connection]);
+    function ConnectionOn() {
+        if (connection == null){
+            return
+        }
+        connection.off("RecieveMessage")
+        connection.on("RecieveMessage", function (message) {
+            setChats(prev =>  {
+                return prev.map(x=> {
+                    if (selectedChat === null){
+                        if (x.id === message.chatId){
+                            x.notReadCount +=1
+                        }
+                        return x
+                    } 
+                    if (selectedChat.id !== message.chatId && x.id === message.chatId){
+                        x.notReadCount +=1
+                    }
+                    return x
+                })
+            })
+            if (selectedChat == null){
+                return
+            }
+            if (message.chatId === selectedChat.id){
+                setMessages(prev => [...prev, message]);
+            }
+        });
+    }
+
+    useEffect(() => {
+        ConnectionOn()
+        if (selectedChat == null) {
+            return
+        }
         GetMessages()
+        
+        setChats(prev =>  {
+            return  prev.map(x=> {
+                if (x.id === selectedChat.id){
+                    x.notReadCount = 0
+                }
+                return x
+            })
+        })
     }, [selectedChat]);
 
     useEffect(() => {
@@ -60,16 +105,8 @@ export const Home = () => {
         const newConnection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:7275/chatHub")
             .build();
-        console.log(newConnection.state)
-        newConnection.on("RecieveMessage", function (message) {
-            console.log("hello")
-            console.log(message.chatId)
-            setMessages(prev => [...prev, message]);
-                
-        });
         try {
             await newConnection.start();
-            console.log(newConnection.state)
             setConnection(newConnection);
         } catch (error) {
             console.error('Ошибка при установлении соединения с SignalR:', error);
@@ -77,9 +114,6 @@ export const Home = () => {
     }
 
     const GetMessages = () => {
-        if (selectedChat == null) {
-            return
-        }
         fetch(`https://localhost:7275/messages/${selectedChat.id}`, {
             method: 'GET',
             headers: {
@@ -96,13 +130,14 @@ export const Home = () => {
                 return response.json()
             })
             .then(data => {
-                setMessages(data)
+                
+                setMessages(data.reverse())
             })
             .catch(error => {
                 console.error('Ошибка:', error);
             })
     }
-
+    
     const GetChats = () => {
         fetch('https://localhost:7275/chats', {
             method: 'GET',
@@ -141,7 +176,6 @@ export const Home = () => {
                             className={`chat-item ${selectedChat?.id === chat.id ? 'active' : ''}`}
                             onClick={() => {
                                 setSelectedChat(chat)
-                                GetConnection()
                             }}
                         >
                             {chat.userName}&nbsp;
