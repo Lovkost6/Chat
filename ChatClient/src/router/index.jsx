@@ -4,6 +4,7 @@ import {SignIn} from "../Components/SignIn/SignIn.jsx";
 import {Home} from "../Components/Home/Home.jsx";
 import {$currentUser} from "../Store/CurrentUser.js";
 import {useUnit} from "effector-react";
+import {SignUp} from "../Components/SignUp/SignUp.jsx";
 
 export const routesPath = {
     Home: '/',
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
                     {path: routesPath.Home, element: <Home/>}
                 ]
             },
-            { path: routesPath.SignUp, element: <div></div> },
+            { path: routesPath.SignUp, element: <SignUp/> },
             { path: routesPath.SignIn, element: <SignIn/> },
         ],
         errorElement: <ErrorPage />

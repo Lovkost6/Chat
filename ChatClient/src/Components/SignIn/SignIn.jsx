@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
-import {useNavigate} from "react-router-dom";
-import {routesPath} from "../../router/index.jsx";
+import {Link, useNavigate} from "react-router-dom";
+import {router, routesPath} from "../../router/index.jsx";
 import "./SignIn.css"
 import {setCurrentUser} from "../../Store/CurrentUser.js";
 
@@ -63,7 +63,9 @@ export const SignIn = () => {
                 </div>
                 {error && <div className="error">{error}</div>}
                 <div className="signin-footer">
-                    <a href="#" className="forgot-password">Забыли пароль?</a>
+                    <Link to={
+                        routesPath.SignUp
+                    } className="signup-link">Зарегистрироваться</Link>
                     <button type="submit" className="signin-button">ВОЙТИ</button>
                 </div>
             </form>

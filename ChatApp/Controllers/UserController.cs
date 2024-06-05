@@ -29,4 +29,5 @@ public class UserController:ControllerBase
             .AsNoTracking().ToListAsync();
         return Ok(users);
     }
+    
 }

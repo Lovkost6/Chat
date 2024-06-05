@@ -47,8 +47,8 @@ input[type="password"] {
 }
 
 /* Стили для ссылки "Забыли пароль?" */
-.forgot-password {
-    font-size: 12px;
+.signup-link {
+    font-size: 16px;
     color: #666;
     text-decoration: none;
 }

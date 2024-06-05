@@ -161,6 +161,7 @@ export const Home = () => {
                 console.error('Ошибка:', error);
             })
     }
+    
 
 
     return (
@@ -168,6 +169,8 @@ export const Home = () => {
             <div className="sidebar">
                 <div className="header">
                     <h2>Чаты</h2>
+                    <button>Создать</button>
+                    
                 </div>
                 <div className="chats-list">
                     {chats?.map(chat => (
