@@ -1,0 +1,16 @@
+﻿.findUser{
+    color: black;
+    margin: 5px;
+}
+.userContainer{
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid #000000;
+    justify-content: space-between;
+   margin: 10px;
+}
+.addChatButton {
+    font-size: 30px;
+    padding: 0px 8px;
+    color: #ffffff;
+}

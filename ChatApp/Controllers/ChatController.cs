@@ -1,10 +1,12 @@
 ﻿using ChatApp.Data;
+using ChatApp.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatApp.Controllers;
 
+[Authorize]
 [ApiController]
 public class ChatController : ControllerBase
 {
@@ -15,7 +17,6 @@ public class ChatController : ControllerBase
         _context = context;
     }
 
-    [Authorize]
     [HttpGet("/chats")]
     public async Task<ActionResult> GetChats()
     {
@@ -34,5 +35,32 @@ public class ChatController : ControllerBase
         
         chatsFirst.AddRange(chatsSecond);
         return Ok(chatsFirst);
+    }
+
+    [HttpPost("/create-chat")]
+    public async Task<ActionResult> CreateChat([FromBody] CreateChat chat)
+    {
+        var currentUser = Convert.ToInt64(User.Claims.ToList()[0].Value);
+        var newChat = new Chat() {FirstUserId = currentUser,SecondUserId = chat.FriendId};
+        if (await CheckDublicateChat(newChat))
+        {
+            return BadRequest("Чат уже существует");
+        }
+        _context.Chats.Add(newChat);
+        await _context.SaveChangesAsync();
+        return Ok(newChat);
+    }
+
+    private async Task<bool> CheckDublicateChat(Chat newChat)
+    {
+        var chatsFirst = await _context.Chats
+            .Where(x => (x.FirstUserId == newChat.FirstUserId && x.SecondUserId == newChat.SecondUserId) ||
+                        (x.SecondUserId == newChat.SecondUserId && x.FirstUserId == newChat.FirstUserId)).ToListAsync();
+        if (chatsFirst.Count != 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -5,6 +5,8 @@ import {routesPath} from "../../router/index.jsx";
 import {useNavigate} from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import {useUnit} from "effector-react";
+import Modal from 'react-modal';
+import {CreateChat} from "../Modal/CreateChat.jsx";
 
 
 export const Home = () => {
@@ -13,10 +15,20 @@ export const Home = () => {
     const [messages, setMessages] = useState([])
     const [connection, setConnection] = useState()
     const [sendingMessage, setSendingMessage] = useState()
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const user = useUnit($currentUser)
     const messagesEndRef = useRef(null);
 
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+        GetChats()
+    };
+    
     useEffect(() => {
         GetConnection()
         GetChats()
@@ -169,8 +181,8 @@ export const Home = () => {
             <div className="sidebar">
                 <div className="header">
                     <h2>Чаты</h2>
-                    <button>Создать</button>
-                    
+                    <button onClick={openModal}>Создать</button>
+                    <CreateChat closeModal={closeModal} modalIsOpen={modalIsOpen} />
                 </div>
                 <div className="chats-list">
                     {chats?.map(chat => (

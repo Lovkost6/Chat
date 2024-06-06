@@ -12,3 +12,8 @@ public class Chat
     public User SecondUser { get; set; }
     public List<Message> Messages { get; set; }
 }
+
+public class CreateChat
+{
+    public long FriendId { get; set; }
+}
