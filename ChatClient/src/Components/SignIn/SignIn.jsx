@@ -3,12 +3,15 @@ import {Link, useNavigate} from "react-router-dom";
 import {router, routesPath} from "../../router/index.jsx";
 import "./SignIn.css"
 import {setCurrentUser} from "../../Store/CurrentUser.js";
+import {useUnit} from "effector-react";
+import {$backBaseUrl} from "../../Store/config.js";
 
 export const SignIn = () => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const baseUrl = useUnit($backBaseUrl)
     const handleSubmit = (event) => {
         event.preventDefault();
         if (login === '' || password === '') {
@@ -16,7 +19,7 @@ export const SignIn = () => {
             return;
         }
 
-        fetch('https://localhost:7275/sign-in', {
+        fetch(`${baseUrl}/sign-in`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

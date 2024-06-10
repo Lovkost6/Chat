@@ -16,7 +16,7 @@ public class UserController:ControllerBase
     }
     
     [Authorize]
-    [HttpGet("/users/{filterName}")]
+    [HttpGet("/users")]
     public async Task<ActionResult> GetUsers(string filterName)
     {
         var currentUserId =  Convert.ToInt64(User.Claims.ToList()[0].Value);

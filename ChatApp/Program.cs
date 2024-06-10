@@ -17,6 +17,7 @@ builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
 
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -34,11 +35,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", 
-        builder =>
+        builderCors =>
         {
-            builder
+            builderCors
                 //.SetIsOriginAllowed(p => true)
-                .WithOrigins("http://localhost:5173")
+                .WithOrigins(builder.Configuration["WithOriginsLocal"])
                 .AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();

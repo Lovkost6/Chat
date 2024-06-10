@@ -7,6 +7,7 @@ import * as signalR from "@microsoft/signalr";
 import {useUnit} from "effector-react";
 import Modal from 'react-modal';
 import {CreateChat} from "../Modal/CreateChat.jsx";
+import {$backBaseUrl} from "../../Store/config.js"
 
 
 export const Home = () => {
@@ -18,6 +19,7 @@ export const Home = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const user = useUnit($currentUser)
+    const baseUrl = useUnit($backBaseUrl)
     const messagesEndRef = useRef(null);
 
     const openModal = () => {
@@ -91,7 +93,7 @@ export const Home = () => {
         messagesEndRef.current?.scrollIntoView({behavior: "instant"});
     };
     const SignOut = () => {
-        fetch('https://localhost:7275/sign-out', {
+        fetch(`${baseUrl}/sign-out`, {
             method: 'GET',
             credentials: 'include',
             withCredentials: true,
@@ -115,7 +117,7 @@ export const Home = () => {
 
     const GetConnection = async () => {
         const newConnection = new signalR.HubConnectionBuilder()
-            .withUrl("https://localhost:7275/chatHub")
+            .withUrl(`${baseUrl}/chatHub`)
             .build();
         try {
             await newConnection.start();
@@ -126,7 +128,7 @@ export const Home = () => {
     }
 
     const GetMessages = () => {
-        fetch(`https://localhost:7275/messages/${selectedChat.id}`, {
+        fetch(`${baseUrl}/messages/${selectedChat.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -151,7 +153,7 @@ export const Home = () => {
     }
     
     const GetChats = () => {
-        fetch('https://localhost:7275/chats', {
+        fetch(`${baseUrl}/chats`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

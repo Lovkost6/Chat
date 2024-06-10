@@ -2,6 +2,8 @@
 import './SignUp.css';
 import {Link, useNavigate} from "react-router-dom";
 import {routesPath} from "../../router/index.jsx";
+import {$backBaseUrl} from "../../Store/config.js"
+import {useUnit} from "effector-react";
 
 export const SignUp = ({ onSignUp }) => {
     const [name, setName] = useState('');
@@ -9,6 +11,7 @@ export const SignUp = ({ onSignUp }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const baseUrl = useUnit($backBaseUrl)
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -16,7 +19,7 @@ export const SignUp = ({ onSignUp }) => {
             setError('Пожалуйста, заполните все поля');
             return;
         }
-        fetch('https://localhost:7275/sign-up', {
+        fetch(`${baseUrl}/sign-up`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
