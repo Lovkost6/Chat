@@ -1,6 +1,5 @@
 ﻿using ChatApp.Data;
 using ChatApp.Model;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -55,13 +54,14 @@ public class ChatController : ControllerBase
     
 
     [HttpGet("/generateQR")]
-    public async Task<ActionResult> GenerateQr()
+    public async Task<ActionResult> GenerateQr(IConfiguration configuration)
     {
+        
         var currentUserId = Convert.ToInt64(User.Claims.ToList()[0].Value);
         
         
         QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
-        QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode($"http://localhost:5173/{currentUserId}",QRCodeGenerator.ECCLevel.Q);
+        QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode($"{configuration["WithOriginsHost"]}/{currentUserId}",QRCodeGenerator.ECCLevel.Q);
         Base64QRCode qrCode = new Base64QRCode(qrCodeData);
         var file = "data:image/png;base64, " + qrCode.GetGraphic(20);
         return Ok(file);

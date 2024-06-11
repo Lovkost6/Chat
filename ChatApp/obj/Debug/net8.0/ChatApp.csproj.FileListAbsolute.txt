@@ -66,10 +66,6 @@ D:\RiderProjects\Chat\ChatApp\obj\Debug\net8.0\ref\ChatApp.dll
 D:\RiderProjects\Chat\ChatApp\obj\Debug\net8.0\ChatApp.sourcelink.json
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\ChatApp.staticwebassets.runtime.json
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Humanizer.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.UI.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Build.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Build.Framework.dll
@@ -87,10 +83,6 @@ D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.DiaSymReader.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.DotNet.Scaffolding.Shared.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Embedded.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
-D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.NET.StringTools.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
 D:\RiderProjects\Chat\ChatApp\bin\Debug\net8.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll

@@ -10,10 +10,12 @@ import {CreateChat} from "../Modal/CreateChat/CreateChat.jsx";
 import {$backBaseUrl} from "../../Store/config.js"
 import {useLocalStorage} from "../../Utils/useLocalStorage.jsx";
 import {QRCode} from "../Modal/QR/QRCode.jsx";
+import boopSfx from '../../../public/sounds/new_message.mp3';
+import useSound from "use-sound";
 
 
 export const Home = () => {
-    const [selectedChat, setSelectedChat] = useLocalStorage("selectedChat",null);
+    const [selectedChat, setSelectedChat] = useLocalStorage("selectedChat", null);
     const [chats, setChats] = useState([])
     const [messages, setMessages] = useState([])
     const [connection, setConnection] = useState()
@@ -24,6 +26,7 @@ export const Home = () => {
     const user = useUnit($currentUser)
     const baseUrl = useUnit($backBaseUrl)
     const messagesEndRef = useRef(null);
+    const [play] = useSound(boopSfx);
     const openModalCreate = () => {
         setModalCreateIsOpen(true);
     };
@@ -38,7 +41,7 @@ export const Home = () => {
     const closeModalQR = () => {
         setModalQRIsOpen(false);
     };
-    
+
     useEffect(() => {
         GetConnection()
         GetChats()
@@ -47,30 +50,34 @@ export const Home = () => {
     useEffect(() => {
         ConnectionOn()
     }, [connection]);
+
     function ConnectionOn() {
-        if (connection == null){
+        if (connection == null) {
             return
         }
         connection.off("RecieveMessage")
         connection.on("RecieveMessage", function (message) {
-            setChats(prev =>  {
-                return prev.map(x=> {
-                    if (selectedChat === null){
-                        if (x.id === message.chatId){
-                            x.notReadCount +=1
+            if (message.ownerId !== user.id) {
+                play()
+            }
+            setChats(prev => {
+                return prev.map(x => {
+                    if (selectedChat === null) {
+                        if (x.id === message.chatId) {
+                            x.notReadCount += 1
                         }
                         return x
-                    } 
-                    if (selectedChat.id !== message.chatId && x.id === message.chatId){
-                        x.notReadCount +=1
+                    }
+                    if (selectedChat.id !== message.chatId && x.id === message.chatId) {
+                        x.notReadCount += 1
                     }
                     return x
                 })
             })
-            if (selectedChat == null){
+            if (selectedChat == null) {
                 return
             }
-            if (message.chatId === selectedChat.id){
+            if (message.chatId === selectedChat.id) {
                 setMessages(prev => [...prev, message]);
             }
         });
@@ -82,10 +89,10 @@ export const Home = () => {
             return
         }
         GetMessages()
-        
-        setChats(prev =>  {
-            return  prev.map(x=> {
-                if (x.id === selectedChat.id){
+
+        setChats(prev => {
+            return prev.map(x => {
+                if (x.id === selectedChat.id) {
                     x.notReadCount = 0
                 }
                 return x
@@ -152,14 +159,14 @@ export const Home = () => {
                 return response.json()
             })
             .then(data => {
-                
+
                 setMessages(data.reverse())
             })
             .catch(error => {
                 console.error('Ошибка:', error);
             })
     }
-    
+
     const GetChats = () => {
         fetch(`${baseUrl}/chats`, {
             method: 'GET',
@@ -235,14 +242,14 @@ export const Home = () => {
                             })}
                             <div ref={messagesEndRef}/>
                         </div>
-                        <form  onSubmit={handleSubmit}>
-                        <div className="chat-input">
-                            <input value={sendingMessage} onChange={e => {
-                                setSendingMessage(e.target.value)
-                            }} type="text"
-                                   placeholder="Напишите сообщение..."/>
-                            <button type="submit">Отправить</button>
-                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div className="chat-input">
+                                <input value={sendingMessage} onChange={e => {
+                                    setSendingMessage(e.target.value)
+                                }} type="text"
+                                       placeholder="Напишите сообщение..."/>
+                                <button type="submit">Отправить</button>
+                            </div>
                         </form>
                     </>
                 ) : (
