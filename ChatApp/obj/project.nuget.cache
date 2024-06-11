@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "r+j4FS/0FiWzGdP5wz2yJ9zDNw+2Tp20ZCCugFevv2dIq/PVOg+cmPOFcVkleE/+aRdk2R7c7th4JO37RAHw2A==",
+  "dgSpecHash": "tNlN3VRhZEnlXutsWz0SOg9FtiOxJsSipJqpkOQtl3d0LG/S5bSk3pbz2z3fTO0wuqiHo3Iau4zORr1pZ9/5Ug==",
   "success": true,
   "projectFilePath": "D:\\RiderProjects\\Chat\\ChatApp\\ChatApp.csproj",
   "expectedPackageFiles": [
@@ -134,6 +134,7 @@
     "C:\\Users\\Lovkost\\.nuget\\packages\\nuget.projectmodel\\6.9.1\\nuget.projectmodel.6.9.1.nupkg.sha512",
     "C:\\Users\\Lovkost\\.nuget\\packages\\nuget.protocol\\6.9.1\\nuget.protocol.6.9.1.nupkg.sha512",
     "C:\\Users\\Lovkost\\.nuget\\packages\\nuget.versioning\\6.9.1\\nuget.versioning.6.9.1.nupkg.sha512",
+    "C:\\Users\\Lovkost\\.nuget\\packages\\qrcoder\\1.5.1\\qrcoder.1.5.1.nupkg.sha512",
     "C:\\Users\\Lovkost\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\Lovkost\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\Lovkost\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

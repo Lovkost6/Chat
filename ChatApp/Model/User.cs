@@ -19,6 +19,8 @@ public class User
     
     [MinLength(3)]
     public string Password { get; set; }
+
+    public string? SaltPw { get; set; }
 }
 
 public class SignInUser

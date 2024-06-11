@@ -6,29 +6,37 @@ import {useNavigate} from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import {useUnit} from "effector-react";
 import Modal from 'react-modal';
-import {CreateChat} from "../Modal/CreateChat.jsx";
+import {CreateChat} from "../Modal/CreateChat/CreateChat.jsx";
 import {$backBaseUrl} from "../../Store/config.js"
+import {useLocalStorage} from "../../Utils/useLocalStorage.jsx";
+import {QRCode} from "../Modal/QR/QRCode.jsx";
 
 
 export const Home = () => {
-    const [selectedChat, setSelectedChat] = useState(null);
+    const [selectedChat, setSelectedChat] = useLocalStorage("selectedChat",null);
     const [chats, setChats] = useState([])
     const [messages, setMessages] = useState([])
     const [connection, setConnection] = useState()
     const [sendingMessage, setSendingMessage] = useState()
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalCreateIsOpen, setModalCreateIsOpen] = useState(false);
+    const [modalQRIsOpen, setModalQRIsOpen] = useState(false);
     const navigate = useNavigate();
     const user = useUnit($currentUser)
     const baseUrl = useUnit($backBaseUrl)
     const messagesEndRef = useRef(null);
-
-    const openModal = () => {
-        setModalIsOpen(true);
+    const openModalCreate = () => {
+        setModalCreateIsOpen(true);
+    };
+    const openModalQR = () => {
+        setModalQRIsOpen(true);
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
+    const closeModalCreate = () => {
+        setModalCreateIsOpen(false);
         GetChats()
+    };
+    const closeModalQR = () => {
+        setModalQRIsOpen(false);
     };
     
     useEffect(() => {
@@ -175,16 +183,22 @@ export const Home = () => {
                 console.error('Ошибка:', error);
             })
     }
-    
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        SendMessage()
+    };
 
     return (
         <div className="home-container">
             <div className="sidebar">
                 <div className="header">
                     <h2>Чаты</h2>
-                    <button onClick={openModal}>Создать</button>
-                    <CreateChat closeModal={closeModal} modalIsOpen={modalIsOpen} />
+                    <button onClick={openModalQR}>QR</button>
+                    <QRCode closeModal={closeModalQR} modalIsOpen={modalQRIsOpen}/>
+
+                    <button onClick={openModalCreate}>Создать</button>
+                    <CreateChat closeModal={closeModalCreate} modalIsOpen={modalCreateIsOpen}/>
                 </div>
                 <div className="chats-list">
                     {chats?.map(chat => (
@@ -221,11 +235,15 @@ export const Home = () => {
                             })}
                             <div ref={messagesEndRef}/>
                         </div>
+                        <form  onSubmit={handleSubmit}>
                         <div className="chat-input">
-                            <input value={sendingMessage} onChange={e => setSendingMessage(e.target.value)} type="text"
+                            <input value={sendingMessage} onChange={e => {
+                                setSendingMessage(e.target.value)
+                            }} type="text"
                                    placeholder="Напишите сообщение..."/>
-                            <button onClick={e => SendMessage()}>Отправить</button>
+                            <button type="submit">Отправить</button>
                         </div>
+                        </form>
                     </>
                 ) : (
                     <div className="no-chat-selected">

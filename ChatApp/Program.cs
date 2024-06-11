@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabaseLocal")));
 
 
 builder.Services.AddAuthorization();

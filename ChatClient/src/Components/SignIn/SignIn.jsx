@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {router, routesPath} from "../../router/index.jsx";
 import "./SignIn.css"
 import {setCurrentUser} from "../../Store/CurrentUser.js";
@@ -12,6 +12,7 @@ export const SignIn = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const baseUrl = useUnit($backBaseUrl)
+    const location = useLocation();
     const handleSubmit = (event) => {
         event.preventDefault();
         if (login === '' || password === '') {
@@ -30,10 +31,13 @@ export const SignIn = () => {
         })
             .then(response => response.json())
             .then(data => {
-                
                 if (data.id) {
                     setCurrentUser(data)
-                    navigate(routesPath.Home);
+                    if (location.state?.from?.pathname){
+                        navigate(location.state.from.pathname)
+                        return
+                    }
+                     navigate(routesPath.Home);
                 } else {
                     setError('Неверный логин или пароль');
                 }
@@ -59,8 +63,7 @@ export const SignIn = () => {
                 <div className="form-group">
                     <input
                         type="password"
-                        placeholder="Пароль"
-                        value={password}
+                        placeholder="Пароль" value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>

@@ -1,8 +1,10 @@
 ﻿using ChatApp.Data;
 using ChatApp.Model;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QRCoder;
 
 namespace ChatApp.Controllers;
 
@@ -50,7 +52,21 @@ public class ChatController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(newChat);
     }
+    
 
+    [HttpGet("/generateQR")]
+    public async Task<ActionResult> GenerateQr()
+    {
+        var currentUserId = Convert.ToInt64(User.Claims.ToList()[0].Value);
+        
+        
+        QRCodeGenerator qrCodeGenerator = new QRCodeGenerator();
+        QRCodeData qrCodeData = qrCodeGenerator.CreateQrCode($"http://localhost:5173/{currentUserId}",QRCodeGenerator.ECCLevel.Q);
+        Base64QRCode qrCode = new Base64QRCode(qrCodeData);
+        var file = "data:image/png;base64, " + qrCode.GetGraphic(20);
+        return Ok(file);
+    }
+    
     private async Task<bool> CheckDublicateChat(Chat newChat)
     {
         var chatsFirst = await _context.Chats

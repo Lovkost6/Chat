@@ -1,9 +1,9 @@
 ﻿import Modal from "react-modal";
 import React, {useEffect, useState} from "react";
-import {resetCurrentUser} from "../../Store/CurrentUser.js";
-import useDebounce from '../../Utils/useDebounce.jsx';
+import {resetCurrentUser} from "../../../Store/CurrentUser.js";
+import useDebounce from '../../../Utils/useDebounce.jsx';
 import "./CreateChat.css"
-import {$backBaseUrl} from "../../Store/config.js"
+import {$backBaseUrl} from "../../../Store/config.js"
 import {useUnit} from "effector-react";
 export const CreateChat = ({modalIsOpen, closeModal}) => {
 
@@ -12,6 +12,7 @@ export const CreateChat = ({modalIsOpen, closeModal}) => {
     const debouncedSearchTerm = useDebounce(search, 100);
     const [error, setError] = useState('');
     const baseUrl = useUnit($backBaseUrl)
+    
 
     useEffect(() => {
         if (debouncedSearchTerm) {

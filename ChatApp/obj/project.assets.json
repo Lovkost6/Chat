@@ -2205,6 +2205,15 @@
           "lib/netstandard2.0/NuGet.Versioning.dll": {}
         }
       },
+      "QRCoder/1.5.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/QRCoder.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/QRCoder.dll": {}
+        }
+      },
       "Swashbuckle.AspNetCore/6.4.0": {
         "type": "package",
         "dependencies": {
@@ -7192,6 +7201,27 @@
         "nuget.versioning.nuspec"
       ]
     },
+    "QRCoder/1.5.1": {
+      "sha512": "+v8VntytuDw4R1nCNJkSA7SWSizJoQfiByV1+nUjOwrDZEuaxefG73aKuuQjpaGtoZ7qlXpRbK70C23m1h3WLw==",
+      "type": "package",
+      "path": "qrcoder/1.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/QRCoder.dll",
+        "lib/net40/QRCoder.dll",
+        "lib/net5.0-windows7.0/QRCoder.dll",
+        "lib/net5.0/QRCoder.dll",
+        "lib/net6.0-windows7.0/QRCoder.dll",
+        "lib/net6.0/QRCoder.dll",
+        "lib/netstandard1.3/QRCoder.dll",
+        "lib/netstandard2.0/QRCoder.dll",
+        "nuget-icon.png",
+        "nuget-readme.md",
+        "qrcoder.1.5.1.nupkg.sha512",
+        "qrcoder.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.4.0": {
       "sha512": "eUBr4TW0up6oKDA5Xwkul289uqSMgY0xGN4pnbOIBqCcN9VKGGaPvHX3vWaG/hvocfGDP+MGzMA0bBBKz2fkmQ==",
       "type": "package",
@@ -8663,6 +8693,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.6",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.6",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 8.0.2",
+      "QRCoder >= 1.5.1",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -8699,11 +8730,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -8731,6 +8757,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[8.0.2, )"
+          },
+          "QRCoder": {
+            "target": "Package",
+            "version": "[1.5.1, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

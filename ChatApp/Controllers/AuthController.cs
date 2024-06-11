@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using ChatApp.Data;
 using ChatApp.Model;
+using ChatApp.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -25,15 +26,20 @@ public class AuthController:ControllerBase
     public async Task<ActionResult<User>> SignIn([FromBody] SignInUser signInUser)
     {
         var currentUser = await _context.Users
-            .Where(user => user.UserName == signInUser.UserName && user.Password == signInUser.Password)
+            .Where(user => user.UserName == signInUser.UserName)
             .AsNoTracking()
             .FirstOrDefaultAsync();
-
+        
         if (currentUser == null)
         {
             return NotFound();
         }
-        
+
+        var isPwCorrect = PasswordHasher.CheckPw(signInUser.Password,currentUser.SaltPw,currentUser.Password);
+        if (isPwCorrect == false)
+        {
+            return BadRequest("Неправильный пароль");
+        }
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Sid, currentUser.Id.ToString()),
@@ -54,6 +60,7 @@ public class AuthController:ControllerBase
             new ClaimsPrincipal(claimsIdentity), 
             authProperties);
         
+        
         return Ok(currentUser);
     }
     [AllowAnonymous]
@@ -62,6 +69,9 @@ public class AuthController:ControllerBase
     {
         try
         {
+            var salt = PasswordHasher.GenSalt();
+            signUpUser.SaltPw = salt;
+            signUpUser.Password = PasswordHasher.HashPw(signUpUser.Password,salt);
             _context.Users.Add(signUpUser);
             await _context.SaveChangesAsync();
         }
