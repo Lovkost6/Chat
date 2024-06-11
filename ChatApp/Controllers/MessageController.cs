@@ -33,7 +33,7 @@ public class MessageController : ControllerBase
         if (audio == null || audio.Length == 0)
             return BadRequest("Upload a valid audio file.");
 
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "Audio");
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
@@ -46,7 +46,7 @@ public class MessageController : ControllerBase
             await audio.CopyToAsync(stream);
         }
 
-        var fileUrl = $"{Request.Scheme}://{Request.Host}/Audio/{Path.GetFileName(filePath)}";
+        var fileUrl = $"{Request.Scheme}://{Request.Host}/ChatApp/{Path.GetFileName(filePath)}";
         return Ok(new { success = true, audioUrl = fileUrl });
     }
 }

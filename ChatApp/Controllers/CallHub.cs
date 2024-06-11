@@ -1,21 +1,21 @@
-﻿using System.Diagnostics;
-using ChatApp.Data;
+﻿namespace ChatApp.Controllers;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ChatApp.Controllers;
-
-public class CallHub:Hub
+public class CallHub : Hub
 {
-    
-    public async Task SendSignal(string user, string signal)
+    public async Task CallUser(string targetConnectionId)
     {
-        await Clients.User(user).SendAsync("ReceiveSignal", signal);
+        await Clients.Client(targetConnectionId).SendAsync("ReceiveCall", Context.ConnectionId);
     }
 
-    // SignalR метод для уведомления о начале звонка
-    public async Task CallUser(string targetUserId, string callerId)
+    public async Task AcceptCall(string callerConnectionId)
     {
-        await Clients.User(targetUserId).SendAsync("ReceiveCall", callerId);
+        await Clients.Client(callerConnectionId).SendAsync("CallAccepted", Context.ConnectionId);
     }
-    
+
+    public override async Task OnDisconnectedAsync(Exception exception)
+    {
+        await Clients.Others.SendAsync("UserDisconnected", Context.ConnectionId);
+        await base.OnDisconnectedAsync(exception);
+    }
 }

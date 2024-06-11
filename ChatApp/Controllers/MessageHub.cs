@@ -13,8 +13,26 @@ public class MessageHub : Hub
     {
         _context = context;
     }
+    
+    public async Task SendSignal(string user, string signal)
+    {
+        await Clients.User(user).SendAsync("ReceiveSignal", signal);
+    }
+    public async Task CallUser(string targetConnectionId)
+    {
+        await Clients.Client(targetConnectionId).SendAsync("ReceiveCall", Context.ConnectionId);
+    }
 
+    public async Task AcceptCall(string callerConnectionId)
+    {
+        await Clients.Client(callerConnectionId).SendAsync("CallAccepted", Context.ConnectionId);
+    }
 
+    public override async Task OnDisconnectedAsync(Exception exception)
+    {
+        await Clients.Others.SendAsync("UserDisconnected", Context.ConnectionId);
+        await base.OnDisconnectedAsync(exception);
+    }
     public async Task SendMessage(string chatId, string userId, string message)
     {
         var httpContext = Context.GetHttpContext();

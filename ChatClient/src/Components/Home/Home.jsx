@@ -276,7 +276,7 @@ export const Home = () => {
                             </div>
                         </form>
                                 <AudioRecorder onSave={handleAudioSave}/>
-                                <CallComponent user={user} targetUserId={selectedChat.userId}/>
+                        <CallComponent user={user} targetUserId={selectedChat.userId} connection={connection} />
                     </>
                 ) : (
                     <div className="no-chat-selected">

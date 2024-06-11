@@ -10,13 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@microsoft/signalr": "^8.0.0",
     "effector": "^23.2.2",
     "effector-react": "^23.2.1",
+    "global": "^4.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.1",
+    "simple-peer": "^9.11.1",
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
