@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatApp.Controllers;
-
+[Authorize]
 public class MessageController : ControllerBase
 {
     private readonly ApplicationContext _context;
@@ -15,7 +15,7 @@ public class MessageController : ControllerBase
         _context = context;
     }
 
-    [Authorize]
+    
     [HttpGet("/messages/{chatId}")]
     public async Task<ActionResult> GetMessages(long chatId)
     {
@@ -25,5 +25,28 @@ public class MessageController : ControllerBase
             .ForEach(x => x.isReaded = true);
         await _context.SaveChangesAsync();
         return Ok(messages);
+    }
+    
+    [HttpPost("upload")]
+    public async Task<IActionResult> Upload(IFormFile audio)
+    {
+        if (audio == null || audio.Length == 0)
+            return BadRequest("Upload a valid audio file.");
+
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "Audio");
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        var filePath = Path.Combine(path, $"{Guid.NewGuid()}_{audio.FileName}");
+
+        using (var stream = new FileStream( filePath, FileMode.Create))
+        {
+            await audio.CopyToAsync(stream);
+        }
+
+        var fileUrl = $"{Request.Scheme}://{Request.Host}/Audio/{Path.GetFileName(filePath)}";
+        return Ok(new { success = true, audioUrl = fileUrl });
     }
 }

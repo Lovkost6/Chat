@@ -4,6 +4,7 @@ using ChatApp.Utils;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabaseHost")));
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabaseLocal")));
 
 
 builder.Services.AddAuthorization();
@@ -39,7 +40,7 @@ builder.Services.AddCors(options =>
         {
             builderCors
                 //.SetIsOriginAllowed(p => true)
-                .WithOrigins(builder.Configuration["WithOriginsHost"])
+                .WithOrigins(builder.Configuration["WithOriginsLocal"])
                 .AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -56,7 +57,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "Audio")),
+    RequestPath = "/Audio"
+});
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

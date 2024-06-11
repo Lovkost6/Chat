@@ -12,6 +12,7 @@ import {useLocalStorage} from "../../Utils/useLocalStorage.jsx";
 import {QRCode} from "../Modal/QR/QRCode.jsx";
 import boopSfx from '../../../public/sounds/new_message.mp3';
 import useSound from "use-sound";
+import {AudioRecorder} from "../AudioRecorder/AudioRecorder.jsx";
 
 
 export const Home = () => {
@@ -195,6 +196,22 @@ export const Home = () => {
         event.preventDefault();
         SendMessage()
     };
+    const handleAudioSave = async (audioBlob) => {
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'audio.wav');
+        
+        const response = await fetch(`${baseUrl}/upload`, {
+            method: 'POST',
+            body: formData,
+            withCredentials: true,
+            credentials: 'include',
+        });
+    
+        const data = await response.json();
+        await connection.invoke("SendMessage", selectedChat.id.toString(), selectedChat.userId.toString(),data.audioUrl);
+        console.log(data.audioUrl)
+        
+    };
 
     return (
         <div className="home-container">
@@ -236,7 +253,13 @@ export const Home = () => {
                                     <div key={mes.id} className={isOwnMessage ? "me" : "friend"}>
                                         <div>{isOwnMessage ? user.name : selectedChat.userName}</div>
                                         {/* Используется userName вместо name для selectedChat */}
+                                        {mes.text.includes("https")?
+                                        <video controls name="media">
+                                        <source src={mes.text} type="audio/wav"/>
+                                        </video>:
                                         <div>{mes.text}</div>
+                                        }
+                                        <div className="createAtMessage">{mes.createAt.substring(0,16)}</div>
                                     </div>
                                 );
                             })}
@@ -251,6 +274,7 @@ export const Home = () => {
                                 <button type="submit">Отправить</button>
                             </div>
                         </form>
+                                <AudioRecorder onSave={handleAudioSave}/>
                     </>
                 ) : (
                     <div className="no-chat-selected">

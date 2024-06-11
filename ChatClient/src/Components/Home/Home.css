@@ -201,3 +201,10 @@ body {
     -webkit-border-radius: 50px;
     border-radius: 50px;
 }
+.createAtMessage{
+    font-size: 10px;
+}
+video{
+    width: 30vh;
+    height: 5vw;
+}

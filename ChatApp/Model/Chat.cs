@@ -17,3 +17,8 @@ public class CreateChat
 {
     public long FriendId { get; set; }
 }
+public class ChatForAudio
+{
+    public IFormFile audio { get; set; } 
+    public long FriendId { get; set; }
+}
