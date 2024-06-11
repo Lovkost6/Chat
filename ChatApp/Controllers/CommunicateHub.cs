@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace ChatApp.Controllers;
 
-public class MessageHub : Hub
+public class CommunicateHub : Hub
 {
     private readonly ApplicationContext _context;
 
-    public MessageHub(ApplicationContext context)
+    public CommunicateHub(ApplicationContext context)
     {
         _context = context;
     }
