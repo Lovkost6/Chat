@@ -23,6 +23,6 @@ public class MessageHub : Hub
             { ChatId = Convert.ToInt64(chatId), OwnerId = currentUser, Text = message, CreateAt = DateTime.Now };
         _context.Messages.Add(newMessage);
         await _context.SaveChangesAsync();
-        Clients.Users([currentUser.ToString(),userId]).SendAsync("RecieveMessage", newMessage);
+        await Clients.Users([currentUser.ToString(),userId]).SendAsync("RecieveMessage", newMessage);
     }
 }

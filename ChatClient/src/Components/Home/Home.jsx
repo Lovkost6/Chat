@@ -13,6 +13,7 @@ import {QRCode} from "../Modal/QR/QRCode.jsx";
 import boopSfx from '../../../public/sounds/new_message.mp3';
 import useSound from "use-sound";
 import {AudioRecorder} from "../AudioRecorder/AudioRecorder.jsx";
+import {CallComponent} from "../Call/CallComponent.jsx";
 
 
 export const Home = () => {
@@ -275,6 +276,7 @@ export const Home = () => {
                             </div>
                         </form>
                                 <AudioRecorder onSave={handleAudioSave}/>
+                                <CallComponent user={user} targetUserId={selectedChat.userId}/>
                     </>
                 ) : (
                     <div className="no-chat-selected">

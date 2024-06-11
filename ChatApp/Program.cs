@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
-builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabaseLocal")));
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabaseHost")));
 
 
 builder.Services.AddAuthorization();
@@ -40,7 +40,7 @@ builder.Services.AddCors(options =>
         {
             builderCors
                 //.SetIsOriginAllowed(p => true)
-                .WithOrigins(builder.Configuration["WithOriginsLocal"])
+                .WithOrigins(builder.Configuration["WithOriginsHost"])
                 .AllowCredentials()
                 .AllowAnyHeader()
                 .AllowAnyMethod();
@@ -69,6 +69,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<MessageHub>("/chatHub");
+app.MapHub<CallHub>("/callHub");
 app.MapControllers();
 
 app.Run();
