@@ -115,8 +115,7 @@ export const CallComponent = ({ user, targetUserId, connection }) => {
                 </div>
             ) : (
                 <div>
-                    <button onClick={startCall}>Начать звонок</button>
-                    <button onClick={answerCall}>Ответить на звонок</button>
+                    <button onClick={startCall}>&#9742;</button>
                 </div>
             )}
         </div>

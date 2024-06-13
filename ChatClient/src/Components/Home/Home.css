@@ -73,7 +73,9 @@ body {
 
 /* Заголовок чата */
 .chat-header {
-    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
     background-color: #ecf0f1;
     border-bottom: 1px solid #ccc;
     color: black;
@@ -207,4 +209,10 @@ body {
 video{
     width: 30vh;
     height: 5vw;
+}
+.friendName{
+    color: black;
+}
+.qrCode{
+    margin: 5px;
 }

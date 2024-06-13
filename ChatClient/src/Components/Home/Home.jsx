@@ -213,13 +213,17 @@ export const Home = () => {
         console.log(data.audioUrl)
         
     };
-
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+            SendMessage()
+        }
+    };
     return (
         <div className="home-container">
             <div className="sidebar">
                 <div className="header">
                     <h2>Чаты</h2>
-                    <button onClick={openModalQR}>QR</button>
+                    <button className="qrCode" onClick={openModalQR}>QR</button>
                     <QRCode closeModal={closeModalQR} modalIsOpen={modalQRIsOpen}/>
 
                     <button onClick={openModalCreate}>Создать</button>
@@ -245,7 +249,8 @@ export const Home = () => {
                 {selectedChat ? (
                     <>
                         <div className="chat-header">
-                            <h3>{selectedChat.name}</h3>
+                            <h3 className="friendName">{selectedChat.userName}</h3>
+                            <CallComponent user={user} targetUserId={selectedChat.userId} connection={connection} />
                         </div>
                         <div className="chat-messages">
                             {messages?.map(mes => {
@@ -266,17 +271,14 @@ export const Home = () => {
                             })}
                             <div ref={messagesEndRef}/>
                         </div>
-                        <form onSubmit={handleSubmit}>
                             <div className="chat-input">
-                                <input value={sendingMessage} onChange={e => {
+                                <input onKeyUp={handleKeyPress}  value={sendingMessage} onChange={e => {
                                     setSendingMessage(e.target.value)
                                 }} type="text"
                                        placeholder="Напишите сообщение..."/>
-                                <button type="submit">Отправить</button>
-                            </div>
-                        </form>
+                                <button onClick={e=> SendMessage()}>➤</button>
                                 <AudioRecorder onSave={handleAudioSave}/>
-                        <CallComponent user={user} targetUserId={selectedChat.userId} connection={connection} />
+                            </div>
                     </>
                 ) : (
                     <div className="no-chat-selected">

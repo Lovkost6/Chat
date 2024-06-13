@@ -4,7 +4,10 @@ export const setCurrentUser = createEvent();
 const unwatchCookiesSet = setCurrentUser.watch((payload) => localStorage.setItem("user",JSON.stringify(payload)))
 
 export const resetCurrentUser = createEvent()
-const unwatchCookiesRemove = resetCurrentUser.watch(() => localStorage.removeItem("user"))
+const unwatchCookiesRemove = resetCurrentUser.watch(() => {
+    localStorage.removeItem("user")
+    localStorage.removeItem("selectedChat")
+})
 
 const readLocalStorageUser = createEffect(
     () => {
