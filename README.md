@@ -1,4 +1,4 @@
-# Пет-проект "Чат" <br>
+#  Чат <br>
 # Стек:<br>
 Asp.Net, SignalR, WebRTC, EF, Cookies, React+Vite, MSSQLServer<br>
 # Функционал:<br>
